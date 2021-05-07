@@ -1,0 +1,102 @@
+create database if not exists Testing_System_Assignment_1;
+use Testing_System_Assignment_1;
+
+
+CREATE TABLE Department 
+(
+	DepartmentID 	INT 	NOT NULL AUTO_INCREMENT ,
+    DepartmentName 	VARCHAR(255) NOT NULL,
+PRIMARY KEY (DepartmentID)
+);
+CREATE TABLE Position
+(
+	PositionID 		INT 	NOT NULL AUTO_INCREMENT,
+    PositionName 	VARCHAR(255) NOT NULL,
+PRIMARY KEY (PositionID)
+);
+CREATE TABLE Account
+(
+	AccountID INT 	NOT NULL AUTO_INCREMENT,
+    Email VARCHAR(255),
+    Username VARCHAR(255) NOT NULL,
+    FullName VARCHAR(255) NOT NULL,
+    DepartmentID INT NOT NULL,
+    PositionID INT NOT NULL,
+    CreateDate DATE NOT NULL ,
+PRIMARY KEY ( AccountID),
+FOREIGN KEY (DepartmentID) REFERENCES department (DepartmentID) ON DELETE CASCADE ,
+FOREIGN KEY (PositionID) REFERENCES  Position (PositionID) ON DELETE CASCADE
+);
+CREATE TABLE `Group`
+(
+	GroupID INT NOT NULL,
+    GroupName VARCHAR(255) NOT NULL,
+    CreatorID INT NOT NULL,
+    CreateDate DATE NOT NULL,
+PRIMARY KEY (GroupID)
+);
+CREATE TABLE GroupAccount
+(
+	GroupID INT NOT NULL,
+    AccountID INT NOT NULL,
+    JoinDate DATE NOT NULL,
+FOREIGN KEY (GroupID) REFERENCES  `Group` (GroupID) ON DELETE CASCADE ,
+FOREIGN KEY (AccountID) REFERENCES  Account(AccountID) ON DELETE CASCADE
+);
+CREATE TABLE TypeQuestion
+(
+	TypeID INT NOT NULL AUTO_INCREMENT,
+    TypeName VARCHAR(255) NOT NULL,
+PRIMARY KEY (TypeID)
+);
+
+CREATE TABLE CategoryQuestion
+(
+	CategoryID INT NOT NULL AUTO_INCREMENT,
+    CategoryName VARCHAR(255) NOT NULL,
+PRIMARY KEY (CategoryID)
+);
+
+CREATE TABLE Question
+( 
+	QuestionID INT NOT NULL AUTO_INCREMENT,
+    Content VARCHAR(255) NOT NULL,
+    CategoryID INT  NOT NULL,
+    TypeID INT NOT NULL,
+    CreatorID INT NOT NULL,
+    CreateDate DATE NOT NULL,
+PRIMARY KEY (QuestionID),
+FOREIGN KEY (CategoryID) REFERENCES  CategoryQuestion(CategoryID) ON DELETE CASCADE ,
+FOREIGN KEY (TypeID) REFERENCES  TypeQuestion(TypeID) ON DELETE CASCADE
+);
+
+CREATE TABLE Answer
+(
+	AnswerID INT NOT NULL AUTO_INCREMENT,
+    Content VARCHAR(255) NOT NULL,
+    QuestionID INT NOT NULL,
+    isCorrect BOOL NOT NULL,
+PRIMARY KEY  (AnswerID) ,
+FOREIGN KEY (QuestionID) REFERENCES Question (QuestionID) ON DELETE CASCADE
+);
+    
+CREATE TABLE Exam
+(
+	ExamID INT NOT NULL AUTO_INCREMENT,
+    `Code` VARCHAR(255) NOT NULL,
+    Title VARCHAR(255) NOT NULL,
+    CategoryID INT NOT NULL,
+    Duration DATETIME NOT NULL ,
+    CreatorID INT NOT NULL,
+    CreateDate DATE NOT NULL,
+PRIMARY KEY (ExamID),
+FOREIGN KEY (CategoryID) REFERENCES CategoryQuestion (CategoryID) ON DELETE CASCADE
+);
+
+CREATE TABLE  ExamQuestion
+(
+	ExamID INT NOT NULL,
+    QuestionID INT NOT NULL,
+FOREIGN KEY (ExamID) REFERENCES Exam(ExamID) ON DELETE CASCADE,
+FOREIGN KEY (QuestionID) REFERENCES Question (QuestionID) ON DELETE CASCADE
+);
