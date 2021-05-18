@@ -70,15 +70,43 @@ select*from Employee_Table;
 
 			
 -- Question 3: Viết lệnh để lấy ra danh sách nhân viên (name) có skill Java
-select et.Employee_Number, et.Employee_Name ,est.Skill_Code FROM Employee_Table et JOIN Employee_Skill_Table est ON et.Employee_Number=est.Employee_Number
-where Skill_Code= 'JAVA';
+SELECT 
+    et.Employee_Number, et.Employee_Name, est.Skill_Code
+FROM
+    Employee_Table et
+        JOIN
+    Employee_Skill_Table est ON et.Employee_Number = est.Employee_Number
+WHERE
+    Skill_Code = 'JAVA';
 
 -- Question 4: Viết lệnh để lấy ra danh sách các phòng ban có >2 nhân viên
-select d.Department_Number,d.Department_Name, count(e.Employee_Number) as number_emp from  employee_table e JOIN department d ON e.Department_Number=d.Department_Number group by d.Department_Number having number_emp>2;
+SELECT 
+    d.Department_Number,
+    d.Department_Name,
+    COUNT(e.Employee_Number) AS number_emp
+FROM
+    employee_table e
+        JOIN
+    department d ON e.Department_Number = d.Department_Number
+GROUP BY d.Department_Number
+HAVING number_emp > 2;
 
 -- Question 5: Viết lệnh để lấy ra danh sách nhân viên của mỗi văn phòng ban.
-select d.Department_Number, e.Employee_Name from employee_table e JOIN department d ON e.Department_Number=d.Department_Number order by d.Department_Number;
+SELECT 
+    d.Department_Number, e.Employee_Name
+FROM
+    employee_table e
+        JOIN
+    department d ON e.Department_Number = d.Department_Number
+ORDER BY d.Department_Number;
 
 -- Question 6: Viết lệnh để lấy ra danh sách nhân viên có > 1 skills.
-select e.* , count(s.Skill_Code) number_skill FROM Employee_Skill_Table s JOIN Employee_Table e ON e.Employee_Number=s.Employee_Number group by Employee_Number having number_skill >1;
+SELECT 
+    e.*, COUNT(s.Skill_Code) number_skill
+FROM
+    Employee_Skill_Table s
+        JOIN
+    Employee_Table e ON e.Employee_Number = s.Employee_Number
+GROUP BY Employee_Number
+HAVING number_skill > 1;
 
