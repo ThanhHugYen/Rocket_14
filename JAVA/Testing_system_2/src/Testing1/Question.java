@@ -8,5 +8,4 @@ public class Question {
 	Type typeName ;
 	Account creator ;
 	Date createDate;
-	Exam[] exams;
 }

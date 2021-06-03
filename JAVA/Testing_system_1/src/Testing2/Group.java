@@ -1,4 +1,4 @@
-package Testing1;
+package Testing2;
 
 import java.util.Date;
 public class Group {
@@ -6,6 +6,6 @@ public class Group {
 		String groupName;
 		Account creator ;
 		Date createDate;
-		Account[] group;
+		
 		
 }
